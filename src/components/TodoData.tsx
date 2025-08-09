@@ -11,20 +11,28 @@ interface iProps {
     owner?: string;
     age?: number;
     isDeveloper?: boolean;
+    deleteTodo: (value: number) => void;
 }
 
 
 
 const TodoData = (props: iProps) => {
-    const { todos, owner = "unknown" } = props;
+    const { todos, deleteTodo } = props;
     return (
         <div>
-            <div>owner = {owner}</div>
             {
                 todos.map(item => {
                     return (
                         <div key={item.id}>
-                            <div>{item.title}</div>
+                            <div style={{ padding: "10px 0" }}>
+                                {item.id} - {item.title}
+                                &nbsp;
+                                <button
+                                    onClick={() => deleteTodo(item.id)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     )
                 })

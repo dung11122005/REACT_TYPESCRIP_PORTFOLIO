@@ -1,37 +1,57 @@
 
+import { useState } from "react";
 import TodoData from "./TodoData";
 import TodoInput from "./TodoInput";
 
 
+interface ITodo {
+    id: number;
+    title: string;
+    isComplete: boolean;
+}
+
+
 const TodoList = () => {
 
-    const todos = [
-        {
-            id: 1,
-            title: "Hoang Tan Dung 1",
-            isComplete: false
-        },
-        {
-            id: 2,
-            title: "Hoang Tan Dung 2",
-            isComplete: false
-        },
-        {
-            id: 3,
-            title: "Hoang Tan Dung 3",
-            isComplete: false
-        },
-        {
-            id: 4,
-            title: "Hoang Tan Dung 4",
-            isComplete: false
-        },
-        {
-            id: 5,
-            title: "Hoang Tan Dung 5",
-            isComplete: false
-        },
-    ]
+    // const todos = [
+    //     {
+    //         id: 1,
+    //         title: "Hoang Tan Dung 1",
+    //         isComplete: false
+    //     },
+    //     {
+    //         id: 2,
+    //         title: "Hoang Tan Dung 2",
+    //         isComplete: false
+    //     },
+    //     {
+    //         id: 3,
+    //         title: "Hoang Tan Dung 3",
+    //         isComplete: false
+    //     },
+    //     {
+    //         id: 4,
+    //         title: "Hoang Tan Dung 4",
+    //         isComplete: false
+    //     },
+    //     {
+    //         id: 5,
+    //         title: "Hoang Tan Dung 5",
+    //         isComplete: false
+    //     },
+    // ]
+
+
+    const [listTodo, setListTodo] = useState<ITodo[]>([])
+
+    const addNewTodo = (todo: ITodo) => {
+        setListTodo([...listTodo, todo])
+    }
+
+    const deleteTodo = (id: number) => {
+        const newList = listTodo.filter(item => item.id !== id);
+        setListTodo(newList)
+    }
 
     return (
         <div style={{
@@ -49,9 +69,13 @@ const TodoList = () => {
             }}
             >My todo list:</div>
             <br />
-            <TodoInput name="your todo" />
+            <TodoInput
+                addNewTodo={addNewTodo}
+
+            />
             <TodoData
-                todos={todos}
+                todos={listTodo}
+                deleteTodo={deleteTodo}
             // owner={"Hoang Tan Dung"}
             // age={20}
             // isDeveloper={true}
